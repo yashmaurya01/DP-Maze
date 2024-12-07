@@ -1,48 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Differential Privacy Maze</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DP Maze - Limited Visibility</title>
     <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
     <header>
-        <h1>Differential Privacy Maze</h1>
-        <p>Explore the trade-off between privacy (epsilon) and the clarity of the maze.</p>
+        <h1>DIFFERENTIAL PRIVACY MAZE</h1>
+        <p>Navigate the maze with limited visibility and a privacy budget. Propose a move, then confirm it.</p>
     </header>
 
-    <div id="controls">
-        <label for="epsilonSlider">Epsilon (Privacy Budget):</label>
-        <input type="range" id="epsilonSlider" min="0.1" max="2" step="0.1" value="1" />
-        <span id="epsilonValue">1.0</span>
-        <button id="resetButton">Reset Maze</button>
-        <button id="helpButton">Help</button>
+    <div id="topControls">
+        <div id="epsilonControls">
+            <label for="epsilonSlider">Epsilon (Privacy Budget):</label>
+            <input type="range" id="epsilonSlider" min="0.1" max="10" step="0.1" value="1" />
+            <span id="epsilonValue">1.0</span>
+        </div>
+        <button id="refreshViewButton" class="hackBtn">[ Refresh View ]</button>
+        <button id="helpButton" class="hackBtn">[ Help ]</button>
+        <button id="restartButton" class="hackBtn">[ Restart ]</button>
+    </div>
+
+    <div id="budgetInfo">
+        <p>Total Budget: <span id="totalBudget">50</span></p>
+        <p>Each refresh subtracts the current epsilon from your total budget.</p>
     </div>
 
     <div id="infoPanel">
-        <h2>About Differential Privacy</h2>
-        <p>
-          Differential Privacy (DP) adds "noise" or uncertainty to data to protect individual privacy.
-          In this maze, a lower epsilon means more privacy but a fuzzier, more distorted maze,
-          making it harder to navigate. A higher epsilon means less privacy but a clearer maze.
-        </p>
-        <p>
-          Adjust the epsilon slider to see how the maze changes in real-time.
-        </p>
+        <h2>About This Maze</h2>
+        <p>The maze is 50x50 cells, visible as a 5x5 area around you.</p>
+        <p>Lower epsilon = more noise (less accurate map), higher epsilon = clearer map.</p>
+        <p>Use arrow buttons to propose a move, then "Confirm Move" to finalize. Refresh the view with your budget to
+            update what you see.</p>
+        <p>Try to reach (49,49)!</p>
     </div>
 
-    <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+        <div id="movementControls">
+            <div class="control-row">
+                <button id="upButton" class="directionBtn">↑</button>
+            </div>
+            <div class="control-row">
+                <button id="leftButton" class="directionBtn">←</button>
+                <button id="downButton" class="directionBtn">↓</button>
+                <button id="rightButton" class="directionBtn">→</button>
+            </div>
+            <div class="control-row">
+                <button id="confirmMoveButton" class="hackBtn">[ Confirm Move ]</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statusPanel">
+        <p>Player Position: <span id="playerPosition">(0,0)</span></p>
+        <p>Goal: (49,49)</p>
+        <p>Distance to Goal: <span id="distanceToGoal">98</span></p>
+        <p id="proposedMoveLine" style="display:none;">Proposed Move: <span id="proposedMove"></span></p>
+    </div>
 
     <footer>
-        <p>
-            Created for educational purposes. 
-            Learn more about DP 
-            <a href="https://differentialprivacy.org/" target="_blank">here</a>.
-        </p>
+        <p>Created for demonstration. Learn more about <span class="highlight">Differential Privacy</span> <a
+                href="https://differentialprivacy.org/" target="_blank">here</a>.</p>
     </footer>
 
-    <!-- Load scripts as modules -->
     <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

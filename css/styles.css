@@ -1,38 +1,126 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Courier New", Courier, monospace;
     margin: 20px;
-    background: #fafafa;
-    color: #333;
+    background: #101010;
+    color: #00ff7f;
+    font-size: 16px;
 }
 
 header h1 {
-    margin-bottom: 0;
+    margin: 0;
+    font-size: 1.8em;
+    color: #0f0;
+    text-shadow: 0 0 5px #0f0;
 }
 
-#controls {
-    margin: 10px 0;
+header p {
+    margin: 5px 0 20px;
+    color: #0f0;
+    font-size: 1em;
+}
+
+#topControls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#epsilonControls {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-#controls label {
+label {
     font-weight: bold;
+    color: #0f0;
 }
 
-#infoPanel {
-    max-width: 400px;
+input[type="range"] {
+    width: 150px;
+}
+
+#budgetInfo,
+#infoPanel,
+#statusPanel {
+    margin-top: 20px;
+    background: #181818;
+    padding: 10px;
+    border: 1px solid #0f0;
+    box-shadow: 0 0 10px #0f0;
+}
+
+#infoPanel h2,
+#budgetInfo p,
+#statusPanel p {
+    margin: 5px 0;
+}
+
+#gameContainer {
+    display: flex;
+    gap: 20px;
+    align-items: start;
     margin-top: 20px;
 }
 
 #gameCanvas {
-    border: 1px solid #000;
-    display: block;
-    margin: 20px 0;
+    border: 1px solid #00ff7f;
+    box-shadow: 0 0 10px #0f0;
+    background: #000;
+}
+
+#movementControls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.control-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.directionBtn,
+.hackBtn {
+    background: #000;
+    color: #0f0;
+    border: 1px solid #0f0;
+    font-family: "Courier New", monospace;
+    cursor: pointer;
+    padding: 10px;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.directionBtn:hover,
+.hackBtn:hover {
+    background: #0f0;
+    color: #000;
+    box-shadow: 0 0 5px #0f0;
 }
 
 footer {
     margin-top: 30px;
     font-size: 0.9em;
-    color: #666;
+    color: #0f0;
+}
+
+.highlight {
+    color: #0f0;
+    text-shadow: 0 0 5px #0f0;
+}
+
+a {
+    color: #0f0;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#proposedMoveLine {
+    color: #0f0;
+    margin-top: 10px;
 }
