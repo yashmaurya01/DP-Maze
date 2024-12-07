@@ -1,15 +1,28 @@
 function showHelp() {
     alert(
-        `Use the arrow buttons to propose a move.
-Then click "Confirm Move" to finalize it.
+        `Use arrow buttons to propose a move.
+Click [Confirm Move] to finalize it.
 
-Adjust epsilon (0.1 to 10):
-- Lower epsilon = more noise (less accurate map)
-- Higher epsilon = clearer map
+[Refresh View] spends (Map Epsilon + Location Epsilon) budget.
+This returns a DP-based local map (via randomized response) and a noisy distance (via Laplace).
 
-Each refresh costs 'epsilon' from your total budget (starting at 50).
-Try to reach (49,49)!`
+Adjust epsilons for clarity vs. budget.
+Reach (49,49)!`
     );
 }
 
-export { showHelp };
+function setupCollapsibles() {
+    const headers = document.querySelectorAll('.collapsibleHeader');
+    headers.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        });
+    });
+}
+
+export { showHelp, setupCollapsibles };
