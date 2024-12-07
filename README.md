@@ -2,6 +2,9 @@
 
 This project demonstrates a concept of navigating a maze under the constraints of differential privacy (DP). The maze is large (50x50 cells), but the player can only see a 5x5 local area around their current position. When the player refreshes their view, noise is introduced to the local map based on a chosen *epsilon* (privacy budget) parameter. Lower epsilon means more distortion (less clarity), and higher epsilon means clearer but less private information.
 
+![image currentUI](currentUI.png)
+
+
 ## Features
 
 - **Limited Visibility:**  
