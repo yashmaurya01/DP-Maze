@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #fafafa;
+    color: #333;
+}
+
+header h1 {
+    margin-bottom: 0;
+}
+
+#controls {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#controls label {
+    font-weight: bold;
+}
+
+#infoPanel {
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+#gameCanvas {
+    border: 1px solid #000;
+    display: block;
+    margin: 20px 0;
+}
+
+footer {
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #666;
+}
