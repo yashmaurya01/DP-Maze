@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalBudget < 0) {
             totalBudget = 0; // No negative budget
         }
-        totalBudgetSpan.textContent = Math.round(totalBudget * 100) / 100; // round to 2 decimals
 
         const half = Math.floor(VISIBLE_SIZE / 2);
         let startX = playerX - half;
@@ -132,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         noisyView[centerY][centerX].wall = false;
 
         localView = noisyView;
+        updateUI();
         draw();
     }
 
@@ -140,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newY = playerY + dy;
         proposedX = newX;
         proposedY = newY;
-        proposedMoveSpan.textContent = `(${proposedX},${proposedY})`;
-        proposedMoveLine.style.display = 'block';
+        updateUI(); // Update UI to show proposed move
     }
 
     function confirmMove() {
@@ -153,18 +152,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!maze[proposedY][proposedX].wall) {
             playerX = proposedX;
             playerY = proposedY;
-            updateStatus();
-            proposedMoveLine.style.display = 'none'; // Hide proposed move after confirmation
+            // Once confirmed, proposed move line should vanish
+            proposedX = playerX;
+            proposedY = playerY;
+            updateUI();
             draw();
         } else {
             alert("That direction is blocked by a wall!");
         }
     }
 
-    function updateStatus() {
+    function updateUI() {
+        // Update epsilon display
+        epsilonValue.textContent = epsilon.toFixed(1);
+
+        // Update budget display
+        totalBudgetSpan.textContent = Math.round(totalBudget * 100) / 100;
+
+        // Update player position & distance
         playerPositionSpan.textContent = `(${playerX},${playerY})`;
         const dist = Math.abs(GOAL_X - playerX) + Math.abs(GOAL_Y - playerY);
         distanceToGoalSpan.textContent = dist.toString();
+
+        // Update proposed move display
+        if (proposedX !== playerX || proposedY !== playerY) {
+            proposedMoveSpan.textContent = `(${proposedX},${proposedY})`;
+            proposedMoveLine.style.display = 'block';
+        } else {
+            // No pending proposed move different from current position
+            proposedMoveLine.style.display = 'none';
+        }
     }
 
     function restartGame() {
@@ -174,16 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
         proposedX = 0;
         proposedY = 0;
         totalBudget = 50;
-        totalBudgetSpan.textContent = totalBudget;
-        updateStatus();
-        proposedMoveLine.style.display = 'none';
+        epsilon = parseFloat(epsilonSlider.value);
+        updateUI();
         refreshLocalView();
     }
 
     // Event Listeners
     epsilonSlider.addEventListener('input', () => {
         epsilon = parseFloat(epsilonSlider.value);
-        epsilonValue.textContent = epsilon.toFixed(1);
+        updateUI();
     });
 
     refreshViewButton.addEventListener('click', () => {
@@ -206,6 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmMoveButton.addEventListener('click', () => confirmMove());
 
     // Initial setup
-    updateStatus();
+    updateUI();
     refreshLocalView(); // initial view
 });
