@@ -1,17 +1,4 @@
-function showHelp() {
-    alert(
-        `Use arrow buttons to propose a move.
-Click [Confirm Move] to finalize it.
-
-[Refresh View] spends (Map Epsilon + Location Epsilon) budget.
-This returns a DP-based local map (via randomized response) and a noisy distance (via Laplace).
-
-Adjust epsilons for clarity vs. budget.
-Reach (49,49)!`
-    );
-}
-
-function setupCollapsibles() {
+export function setupCollapsibles() {
     const headers = document.querySelectorAll('.collapsibleHeader');
     headers.forEach(header => {
         header.addEventListener('click', () => {
@@ -24,5 +11,3 @@ function setupCollapsibles() {
         });
     });
 }
-
-export { showHelp, setupCollapsibles };

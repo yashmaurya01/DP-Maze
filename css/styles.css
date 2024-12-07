@@ -1,137 +1,81 @@
 body {
+    background: #000;
+    color: #ff9900;
     font-family: "Courier New", Courier, monospace;
-    margin: 0;
-    background: #101010;
-    color: #00ff7f;
-    font-size: 16px;
-}
-
-/* A wrapper to center controlPanel content */
-#pageWrapper {
-    max-width: 1000px;
-    /* adjust as needed */
-    margin: 0 auto;
+    margin: 20px;
     text-align: center;
-    padding: 40px;
 }
 
 header h1 {
     margin: 0 0 20px;
     font-size: 1.8em;
-    color: #0f0;
-    text-shadow: 0 0 5px #0f0;
+    color: #ff9900;
+    text-shadow: 0 0 5px #ff9900;
 }
 
-/* Main container holds maze and controls side by side */
-#mainContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    /* center the child items horizontally */
-    margin-bottom: 20px;
+button.hackBtn {
+    background: #111;
+    color: #ff9900;
+    border: 1px solid #ff9900;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    font-family: "Courier New", monospace;
+    margin: 5px;
 }
 
-/* Maze container and canvas */
-#mazeContainer {
-    display: flex;
-    justify-content: center;
-}
-
-#gameCanvas {
-    border: 1px solid #00ff7f;
-    background: #000;
-    box-shadow: 0 0 10px #0f0;
-}
-
-/* Control panel to the right of the maze */
-#controlPanel {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-left: 40px;
-}
-
-/* Panel styling remains the same */
-#epsilons,
-#budgetInfo,
-#movementControls,
-#actions,
-#statusPanel {
-    background: #181818;
-    padding: 10px;
-    border: 1px solid #0f0;
-    box-shadow: 0 0 5px #0f0;
-    max-width: 300px;
-    /* keep panels narrower for neat layout */
-    margin: 0 auto;
-    /* center each panel in its column */
-}
-
-.sliderGroup {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 5px;
-}
-
-label {
-    font-weight: bold;
-    color: #0f0;
+button.hackBtn:hover {
+    background: #ff9900;
+    color: #000;
+    text-shadow: none;
 }
 
 input[type="range"] {
-    width: 100px;
+    width: 150px;
 }
 
-.directionBtn,
-.hackBtn {
-    background: #000;
-    color: #0f0;
-    border: 1px solid #0f0;
-    font-family: "Courier New", monospace;
-    cursor: pointer;
-    padding: 5px 10px;
-    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-    font-size: 14px;
+#setupPanel {
+    border: 1px solid #ff9900;
+    padding: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+    background: #111;
+    box-shadow: 0 0 5px #ff9900;
 }
 
-.directionBtn:hover,
-.hackBtn:hover {
-    background: #0f0;
-    color: #000;
-    box-shadow: 0 0 5px #0f0;
+#gamePanel {
+    border: 1px solid #ff9900;
+    padding: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #111;
+    box-shadow: 0 0 5px #ff9900;
 }
 
-.control-row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 5px;
+.query-section,
+.door-section {
+    margin: 20px 0;
 }
 
 .collapsibleSection {
     margin-top: 20px;
-    background: #181818;
-    border: 1px solid #0f0;
-    box-shadow: 0 0 5px #0f0;
+    background: #111;
+    border: 1px solid #ff9900;
+    box-shadow: 0 0 5px #ff9900;
     padding: 0;
     max-width: 700px;
-    margin: 40px auto;
-    /* center these sections */
+    margin: 20px auto;
     text-align: left;
-    /* keep text aligned left inside */
 }
 
 .collapsibleHeader {
     margin: 0;
     padding: 10px;
     background: #000;
-    color: #0f0;
+    color: #ff9900;
     cursor: pointer;
     font-weight: bold;
     user-select: none;
-    text-align: left;
 }
 
 .collapsibleContent {
@@ -139,27 +83,6 @@ input[type="range"] {
 }
 
 .collapsibleHeader:hover {
-    background: #0f0;
+    background: #ff9900;
     color: #000;
-}
-
-footer {
-    margin-top: 30px;
-    font-size: 0.9em;
-    color: #0f0;
-    text-align: center;
-}
-
-.highlight {
-    color: #0f0;
-    text-shadow: 0 0 5px #0f0;
-}
-
-a {
-    color: #0f0;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
 }

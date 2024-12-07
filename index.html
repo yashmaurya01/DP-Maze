@@ -4,103 +4,85 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DP Maze - Confirm Moves & Proper DP Mechanisms</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <title>DP Honeycomb Maze</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
     <header>
-        <center>
-            <h1>DIFFERENTIAL PRIVACY MAZE</h1>
-        </center>
+        <h1>DIFFERENTIAL PRIVACY HONEYCOMB MAZE</h1>
     </header>
 
-    <div id="mainContainer">
-        <div id="mazeContainer">
-            <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <div id="setupPanel">
+        <p>Select Difficulty (Total Budget):</p>
+        <button class="hackBtn" data-difficulty="easy">Easy (40)</button>
+        <button class="hackBtn" data-difficulty="medium">Medium (20)</button>
+        <button class="hackBtn" data-difficulty="hard">Hard (10)</button>
+
+        <p>Query Cost per Query:</p>
+        <input type="range" id="queryCostSlider" min="1" max="10" step="1" value="2">
+        <span id="queryCostValue">2</span>
+
+        <p>Epsilon per Query (Higher = More Accurate):</p>
+        <input type="range" id="epsilonSlider" min="0.1" max="2.0" step="0.1" value="0.5">
+        <span id="epsilonValue">0.5</span>
+
+        <button class="hackBtn" id="startGameBtn">Start Game</button>
+    </div>
+
+    <div id="gamePanel" style="display:none;">
+        <div>Remaining Budget: <span id="budgetDisplay">...</span></div>
+        <div class="query-section">
+            <h2>Queries</h2>
+            <button id="queryWaterBtn" class="hackBtn">Query: Water?</button>
+            <button id="queryGuardBtn" class="hackBtn">Query: Guard?</button>
+            <button id="queryLockedBtn" class="hackBtn">Query: Locked?</button>
         </div>
-        <div id="controlPanel">
-            <div id="epsilons">
-                <div class="sliderGroup">
-                    <label for="mapEpsilonSlider">Map Epsilon:</label>
-                    <input type="range" id="mapEpsilonSlider" min="0.1" max="10" step="0.1" value="1" />
-                    <span id="mapEpsilonValue">1.0</span>
-                </div>
-                <div class="sliderGroup">
-                    <label for="locEpsilonSlider">Location Epsilon:</label>
-                    <input type="range" id="locEpsilonSlider" min="0.1" max="10" step="0.1" value="1" />
-                    <span id="locEpsilonValue">1.0</span>
-                </div>
-            </div>
-
-            <div id="budgetInfo">
-                <p>Total Budget: <span id="totalBudget">50</span></p>
-                <p>Each refresh costs (Map Epsilon + Location Epsilon)</p>
-            </div>
-
-            <div id="movementControls">
-                <div class="control-row">
-                    <button id="upButton" class="directionBtn">↑</button>
-                </div>
-                <div class="control-row">
-                    <button id="leftButton" class="directionBtn">←</button>
-                    <button id="downButton" class="directionBtn">↓</button>
-                    <button id="rightButton" class="directionBtn">→</button>
-                </div>
-                <div class="control-row">
-                    <button id="confirmMoveButton" class="hackBtn">[ Confirm Move ]</button>
-                </div>
-            </div>
-
-            <div id="actions">
-                <button id="refreshViewButton" class="hackBtn">[ Refresh View ]</button>
-                <button id="restartButton" class="hackBtn">[ Restart ]</button>
-                <button id="helpButton" class="hackBtn">[ Help ]</button>
-            </div>
-
-            <div id="statusPanel">
-                <p>Approximate Distance to Goal: <span id="noisyDistance">...</span></p>
-            </div>
+        <div class="door-section">
+            <h2>Doors</h2>
+            <p>Choose a door to move through:</p>
+            <button id="doorA" class="hackBtn">A</button>
+            <button id="doorB" class="hackBtn">B</button>
+            <button id="doorC" class="hackBtn">C</button>
+            <button id="doorD" class="hackBtn">D</button>
+        </div>
+        <div>
+            <button id="restartBtn" class="hackBtn">Restart</button>
         </div>
     </div>
 
     <div class="collapsibleSection">
-        <h2 class="collapsibleHeader">About This Maze</h2>
+        <h2 class="collapsibleHeader">About This Game</h2>
         <div class="collapsibleContent" style="display:none;">
             <p>
-                This maze uses Differential Privacy for both the local map and the reported distance to the goal.
-                Map Epsilon controls the accuracy of the wall layout (via randomized response),
-                and Location Epsilon controls the noise added to the distance measure (via Laplace mechanism).
+                In this DP Honeycomb Maze, you navigate a 4x4 grid. Some doors lead to water (loss), some are locked,
+                and guards roam inside!
+                Your goal: move from the top row to the bottom without getting caught or drowned.
             </p>
             <p>
-                Lower epsilon = more noise, cheaper queries; Higher epsilon = clearer info but costlier.
-                Propose a move with arrows, confirm it to move if possible.
-                Refresh View costs budget and returns a noisy local map and noisy distance.
-                Try to reach (49,49)!
+                You can ask DP queries about the doors before choosing one. Each query consumes budget and may return a
+                noisy (but differentially private) answer.
+                Adjust the epsilon to control how accurate answers are. Higher epsilon = more accurate answers.
             </p>
         </div>
     </div>
 
     <div class="collapsibleSection">
-        <h2 class="collapsibleHeader">Detailed Instructions & Help</h2>
+        <h2 class="collapsibleHeader">How Differential Privacy Works Here</h2>
         <div class="collapsibleContent" style="display:none;">
             <p>
-                - Arrow Buttons: Propose a move (no cost).<br />
-                - Confirm Move: Check if move is valid. If blocked by a wall, you stay put.<br />
-                - Refresh View: Costs (Map Epsilon + Location Epsilon) from budget, returning a DP view of the 5x5 area
-                around you plus a noisy distance to goal.<br />
-                - Map Epsilon uses randomized response to flip walls with DP guarantees.<br />
-                - Location Epsilon uses Laplace noise for the distance.<br />
-                - No exact coordinates are revealed. Movement doesn't update distance automatically; only refresh
-                does.<br />
-                - Goal: Reach cell (49,49).
+                Each query reduces your privacy budget. The query cost sets how much budget you spend per query.
+                Epsilon sets the DP parameter: higher epsilon = less noise = more accurate answers.
+            </p>
+            <p>
+                By tuning these parameters, you control the trade-off between number of queries and accuracy.
+                DP ensures you can't perfectly learn the maze and guard placement with certainty.
             </p>
         </div>
     </div>
 
     <footer>
-        <p>Created for demonstration. Learn more about <span class="highlight">Differential Privacy</span> <a
-                href="https://differentialprivacy.org/" target="_blank">here</a>.</p>
+        <p>Created as a demonstration of interactive DP in a maze game. Neon orange & black theme.</p>
     </footer>
 
     <script type="module" src="js/main.js"></script>

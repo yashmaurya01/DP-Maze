@@ -1,4 +1,4 @@
-## DP Maze Runner (Game Overview) [Work in Progress]
+## Game Overview
 
 **Concept:**  
 The DP Honeycomb Maze is a 4x4 grid maze game. The player starts at the top row and must navigate to the bottom without falling into water or being caught by guards. Each cell can have up to four doors (up, down, left, right), some may be locked or lead outside (where water is), and two guards roam inside the maze. The twist is that the player can query information about the doors before choosing one, but these queries are answered using Differential Privacy (DP) mechanisms, ensuring uncertainty and preventing exact knowledge of the maze layout.
