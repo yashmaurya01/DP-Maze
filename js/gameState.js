@@ -3,6 +3,8 @@ export const HEIGHT = 4;
 let maze = [];
 let playerPos = { x: 0, y: 0 };
 let guards = [];
+export const doorLockingProbability = 1/4;
+export const numGuards = 2;
 
 export function initGame(difficulty) {
     // Initialize maze: each cell has doors (up,down,left,right)
@@ -11,7 +13,7 @@ export function initGame(difficulty) {
     maze = createMaze();
     playerPos = { x: Math.floor(Math.random() * WIDTH), y: 0 };
     guards = initGuards();
-    setDifficultyBudget(difficulty);
+    // setDifficultyBudget(difficulty);
 }
 
 function createMaze() {
@@ -32,14 +34,31 @@ function createMaze() {
         }
         m.push(row);
     }
-    // Randomly lock some doors or randomize further as needed
+    // Add random locked doors
+    for (let y = 0; y < HEIGHT; y++) {
+        for (let x = 0; x < WIDTH; x++) {
+            const cell = m[y][x];
+            // Check each internal door
+            if (y > 0 && !cell.doors.up.water) {
+                cell.doors.up.locked = Math.random() < doorLockingProbability;
+                // Mirror the lock state to the adjacent cell's corresponding door
+                m[y-1][x].doors.down.locked = cell.doors.up.locked;
+            }
+            if (x > 0 && !cell.doors.left.water) {
+                cell.doors.left.locked = Math.random() < doorLockingProbability;
+                // Mirror the lock state to the adjacent cell's corresponding door
+                m[y][x-1].doors.right.locked = cell.doors.left.locked;
+            }
+        }
+    }
+    
     return m;
 }
 
 function initGuards() {
     // Place two guards in bottom half randomly
     let positions = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < numGuards; i++) {
         positions.push({
             x: Math.floor(Math.random() * WIDTH),
             y: 2 + Math.floor(Math.random() * 2)
@@ -59,17 +78,12 @@ export function movePlayer(direction) {
     // direction in {up,down,left,right}
     let cell = maze[playerPos.y][playerPos.x];
     let door = cell.doors[direction];
-    // If door.water -> game over
-    // If door.locked -> if player tries anyway, must be noised check?
-    // Actually opening the door leads player to the next cell if not water
+
     if (door.water) {
         return { gameOver: true, reason: 'water' };
     }
     if (door.locked) {
-        // player moves or not? For simplicity, locked means can’t move through
-        // In a DP scenario, we never confirm truly locked?
-        // Let's assume door state known after chosen (no queries = risk)
-        return { gameOver: true, reason: 'lockedDoor' };
+        return { gameOver: false, reason: 'lockedDoor', moved: false };
     }
 
     // Compute new pos
@@ -82,7 +96,7 @@ export function movePlayer(direction) {
 
     playerPos = { x: nx, y: ny };
 
-    return { gameOver: false };
+    return { gameOver: false, moved: true };
 }
 
 export function moveGuards() {

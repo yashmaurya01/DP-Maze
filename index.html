@@ -19,14 +19,6 @@
         <button class="hackBtn" data-difficulty="medium">Medium (20)</button>
         <button class="hackBtn" data-difficulty="hard">Hard (10)</button>
 
-        <p>Query Cost per Query:</p>
-        <input type="range" id="queryCostSlider" min="1" max="10" step="1" value="2">
-        <span id="queryCostValue">2</span>
-
-        <p>Epsilon per Query (Higher = More Accurate):</p>
-        <input type="range" id="epsilonSlider" min="0.1" max="2.0" step="0.1" value="0.5">
-        <span id="epsilonValue">0.5</span>
-
         <button class="hackBtn" id="startGameBtn">Start Game</button>
     </div>
 
@@ -37,14 +29,34 @@
             <button id="queryWaterBtn" class="hackBtn">Query: Water?</button>
             <button id="queryGuardBtn" class="hackBtn">Query: Guard?</button>
             <button id="queryLockedBtn" class="hackBtn">Query: Locked?</button>
+            <div id="queryResult" class="query-result">
+                Select a door and make a query...
+            </div>
         </div>
-        <div class="door-section">
-            <h2>Doors</h2>
-            <p>Choose a door to move through:</p>
-            <button id="doorA" class="hackBtn">A</button>
-            <button id="doorB" class="hackBtn">B</button>
-            <button id="doorC" class="hackBtn">C</button>
-            <button id="doorD" class="hackBtn">D</button>
+        <div class="door-layout">
+            <div class="door-row">
+                <div class="door-spacer"></div>
+                <div class="door up" id="doorUp">
+                    <div class="door-label">UP</div>
+                </div>
+                <div class="door-spacer"></div>
+            </div>
+            <div class="door-row">
+                <div class="door left" id="doorLeft">
+                    <div class="door-label">LEFT</div>
+                </div>
+                <div class="door-center"></div>
+                <div class="door right" id="doorRight">
+                    <div class="door-label">RIGHT</div>
+                </div>
+            </div>
+            <div class="door-row">
+                <div class="door-spacer"></div>
+                <div class="door down" id="doorDown">
+                    <div class="door-label">DOWN</div>
+                </div>
+                <div class="door-spacer"></div>
+            </div>
         </div>
         <div>
             <button id="restartBtn" class="hackBtn">Restart</button>

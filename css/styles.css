@@ -86,3 +86,124 @@ input[type="range"] {
     background: #ff9900;
     color: #000;
 }
+
+.door-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.door-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    height: 100px;
+}
+
+.door {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #ff9900;
+    background: #111;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 0 5px #ff9900;
+}
+
+.door:hover {
+    background: #ff9900;
+    color: #000;
+    box-shadow: 0 0 15px #ff9900;
+}
+
+.door-label {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.door-spacer {
+    width: 100px;
+    height: 100px;
+}
+
+.door-center {
+    width: 100px;
+    height: 100px;
+    background: #222;
+    border: 1px solid #333;
+}
+
+/* Add these styles for when a door is selected */
+.door.selected {
+    background: #ff9900;
+    color: #000;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px #ff9900;
+    }
+
+    50% {
+        box-shadow: 0 0 20px #ff9900;
+    }
+
+    100% {
+        box-shadow: 0 0 5px #ff9900;
+    }
+}
+
+.door {
+    position: relative;
+}
+
+.door::after {
+    content: "Double-click to move";
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8em;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.door:hover::after {
+    opacity: 0.7;
+}
+
+button.hackBtn.selected {
+    background: #ff9900;
+    color: #000;
+    box-shadow: 0 0 10px #ff9900;
+    font-weight: bold;
+}
+
+.query-result {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid #ff9900;
+    background: #111;
+    min-height: 30px;
+    font-family: "Courier New", monospace;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -143,7 +143,7 @@ project/
 
 5. **queries.js:**  
    - Maintains `remainingBudget`, `epsilonPerQuery`, `costPerQuery`.
-   - Functions `setBudget()`, `setQueryCost()`, `setEpsilon()`.
+   - Functions `setBudget()`, `setEpsilon()`.
    - `queryDoorIsWater()`, `queryDoorHasGuard()`, `queryDoorIsLocked()` return DP answers or null if not enough budget.
    - `getRemainingBudget()` for UI updates.
 

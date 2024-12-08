@@ -2,8 +2,6 @@ import { randomizedResponse } from './dp.js';
 
 let remainingBudget = 0;
 let epsilonPerQuery = 0.5;
-let costPerQuery = 2;
-
 /**
  * Set the total privacy budget (remainingBudget).
  * Called once at the start of the game based on selected difficulty.
@@ -11,15 +9,6 @@ let costPerQuery = 2;
 export function setBudget(totalBudget) {
     remainingBudget = totalBudget;
 }
-
-/**
- * Set how much budget each query costs.
- * Called after user chooses a cost slider value before starting the game.
- */
-export function setQueryCost(cost) {
-    costPerQuery = cost;
-}
-
 /**
  * Set epsilon per query.
  * Higher epsilon = less noise = more accurate DP responses.
@@ -33,7 +22,7 @@ export function setEpsilon(eps) {
  * Check if we have enough budget to perform a query.
  */
 function canQuery() {
-    return remainingBudget >= costPerQuery;
+    return remainingBudget >= epsilonPerQuery;
 }
 
 /**
