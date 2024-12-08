@@ -26,9 +26,27 @@
         <div>Remaining Budget: <span id="budgetDisplay">...</span></div>
         <div class="query-section">
             <h2>Queries</h2>
-            <button id="queryWaterBtn" class="hackBtn">Query: Water?</button>
-            <button id="queryGuardBtn" class="hackBtn">Query: Guard?</button>
-            <button id="queryLockedBtn" class="hackBtn">Query: Locked?</button>
+            <div class="query-group">
+                <button id="queryWaterBtn" class="hackBtn">Query: Water?</button>
+                <div class="epsilon-slider">
+                    <input type="range" id="waterEpsilon" min="0.1" max="2.0" step="0.1" value="0.5">
+                    <span class="epsilon-value">ε: 0.5</span>
+                </div>
+            </div>
+            <div class="query-group">
+                <button id="queryGuardBtn" class="hackBtn">Query: Guard?</button>
+                <div class="epsilon-slider">
+                    <input type="range" id="guardEpsilon" min="0.1" max="2.0" step="0.1" value="0.5">
+                    <span class="epsilon-value">ε: 0.5</span>
+                </div>
+            </div>
+            <div class="query-group">
+                <button id="queryLockedBtn" class="hackBtn">Query: Locked?</button>
+                <div class="epsilon-slider">
+                    <input type="range" id="lockedEpsilon" min="0.1" max="2.0" step="0.1" value="0.5">
+                    <span class="epsilon-value">ε: 0.5</span>
+                </div>
+            </div>
             <div id="queryResult" class="query-result">
                 Select a door and make a query...
             </div>

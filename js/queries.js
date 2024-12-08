@@ -1,7 +1,7 @@
 import { randomizedResponse } from './dp.js';
 
 let remainingBudget = 0;
-let epsilonPerQuery = 0.5;
+let epsilonPerQuery = 1;
 /**
  * Set the total privacy budget (remainingBudget).
  * Called once at the start of the game based on selected difficulty.
@@ -14,8 +14,16 @@ export function setBudget(totalBudget) {
  * Higher epsilon = less noise = more accurate DP responses.
  * Called after user chooses epsilon slider value before starting the game.
  */
-export function setEpsilon(eps) {
-    epsilonPerQuery = eps;
+export function setWaterEpsilon(eps) {
+    waterEpsilon = eps;
+}
+
+export function setGuardEpsilon(eps) {
+    guardEpsilon = eps;
+}
+
+export function setLockedEpsilon(eps) {
+    lockedEpsilon = eps;
 }
 
 /**
@@ -32,7 +40,7 @@ function canQuery() {
  */
 export function queryDoorIsWater(doorTrueValue) {
     if (!canQuery()) return null;
-    remainingBudget -= costPerQuery;
+    remainingBudget -= epsilonPerQuery;
     return randomizedResponse(doorTrueValue, epsilonPerQuery);
 }
 
@@ -42,7 +50,7 @@ export function queryDoorIsWater(doorTrueValue) {
  */
 export function queryDoorHasGuard(doorTrueValue) {
     if (!canQuery()) return null;
-    remainingBudget -= costPerQuery;
+    remainingBudget -= epsilonPerQuery;
     return randomizedResponse(doorTrueValue, epsilonPerQuery);
 }
 
@@ -52,7 +60,7 @@ export function queryDoorHasGuard(doorTrueValue) {
  */
 export function queryDoorIsLocked(doorTrueValue) {
     if (!canQuery()) return null;
-    remainingBudget -= costPerQuery;
+    remainingBudget -= epsilonPerQuery;
     return randomizedResponse(doorTrueValue, epsilonPerQuery);
 }
 
@@ -62,3 +70,4 @@ export function queryDoorIsLocked(doorTrueValue) {
 export function getRemainingBudget() {
     return remainingBudget;
 }
+

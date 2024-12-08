@@ -1,6 +1,7 @@
 import { initGame, movePlayer, moveGuards, checkGuardsCatchPlayer, doorTrueValues } from './gameState.js';
 import { setBudget, setEpsilon, queryDoorIsWater, queryDoorHasGuard, queryDoorIsLocked, getRemainingBudget } from './queries.js';
 import { setupCollapsibles } from './ui.js';
+import { playQuerySound, playErrorSound } from './audio.js';
 
 let chosenDoorKey = null;
 let gameStarted = false;
@@ -28,9 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('queryWaterBtn').addEventListener('click', () => {
         if (!gameStarted || !chosenDoorKey) {
+            playErrorSound();
             updateQueryResult("Please select a door first!");
             return;
         }
+        playQuerySound();
         let { water } = doorTrueValues(chosenDoorKey);
         let ans = queryDoorIsWater(water);
         if (ans === null) {
@@ -43,9 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('queryGuardBtn').addEventListener('click', () => {
         if (!gameStarted || !chosenDoorKey) {
+            playErrorSound();
             updateQueryResult("Please select a door first!");
             return;
         }
+        playQuerySound();
         let { guard } = doorTrueValues(chosenDoorKey);
         let ans = queryDoorHasGuard(guard);
         if (ans === null) {
@@ -58,9 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('queryLockedBtn').addEventListener('click', () => {
         if (!gameStarted || !chosenDoorKey) {
+            playErrorSound();
             updateQueryResult("Please select a door first!");
             return;
         }
+        playQuerySound();
         let { locked } = doorTrueValues(chosenDoorKey);
         let ans = queryDoorIsLocked(locked);
         if (ans === null) {
@@ -87,6 +94,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const direction = door.id.replace('door', '').toLowerCase();
             chooseDoor(direction);
         });
+    });
+
+    document.getElementById('waterEpsilon').addEventListener('input', (e) => {
+        setWaterEpsilon(parseFloat(e.target.value));
+        e.target.nextElementSibling.textContent = `ε: ${e.target.value}`;
+    });
+
+    document.getElementById('guardEpsilon').addEventListener('input', (e) => {
+        setGuardEpsilon(parseFloat(e.target.value));
+        e.target.nextElementSibling.textContent = `ε: ${e.target.value}`;
+    });
+
+    document.getElementById('lockedEpsilon').addEventListener('input', (e) => {
+        setLockedEpsilon(parseFloat(e.target.value));
+        e.target.nextElementSibling.textContent = `ε: ${e.target.value}`;
     });
 });
 
